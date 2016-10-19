@@ -28,7 +28,6 @@ public class ApplicationFrame extends JFrame
 		// mainPanel innehåller
 		// - DrawingPanel - en JPanel där figurerna ritas ut
 		// - ControlPanel - en JPanel som innehåller styrelementen
-		
 		JPanel mainPanel = new JPanel ();
 		mainPanel.setLayout(new BorderLayout());
 		add(mainPanel);

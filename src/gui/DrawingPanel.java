@@ -11,8 +11,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.JPanel;
+
 /**
  * DrawingPanel kan användas för att visa geometriska figurer.
  * Klassen implementerar MouseListener, dvs. innehåller metoder
@@ -21,8 +23,9 @@ import javax.swing.JPanel;
  * @author Peter.Jenke@hig.se
  */
 @SuppressWarnings("serial")
-class DrawingPanel extends JPanel implements MouseListener
-{
+class DrawingPanel extends JPanel implements MouseListener {
+	private FigurePainterImpl figurePainter;
+	
 	// Uppgifter:
 	// - Lägg till kod för att tilldela och lagra en instans FigurePainter.
 	// - Lägg till kod för att tilldela och lagra en instans PrimitivesPainter.
@@ -36,6 +39,8 @@ class DrawingPanel extends JPanel implements MouseListener
 	{
 		// MapPanel 'fångar' själv mushändelse:
 		addMouseListener(this);
+		
+		figurePainter = new FigurePainterImpl();
 	}
 
 	/**
@@ -50,9 +55,12 @@ class DrawingPanel extends JPanel implements MouseListener
 		// Tilldela g2-objektet till PrimitivesPainter-instansen
 		// Anrop rit-metoden i FigurePainter-instansen.
 		
-		// Rit-exempel: Ritar ut en linje från pixel med position (10, 10)
-		// till pixel med position (790, 590):
-		g2.drawLine (10, 10, 790, 590);
+		figurePainter.setGraphics(g2);
+		figurePainter.paintAll();
+	}
+	
+	public void setDrawables(List<Drawable> drawables) {
+		figurePainter.setDrawables(drawables);
 	}
 
 	@Override
