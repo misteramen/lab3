@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Rectangle</code> class represents a rectangle in 2D-space. It contains four
  * instance variables: <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code>.
@@ -15,7 +18,7 @@ package model;
  * @version 2.0
  *
  */
-public class Rectangle extends Figure implements Scale, Rotate {
+public class Rectangle extends Figure implements Scale, Rotate, Drawable {
 	private Vertex2D a; 
 	private Vertex2D b;
 	private Vertex2D c;
@@ -69,6 +72,14 @@ public class Rectangle extends Figure implements Scale, Rotate {
 			(a.getX() + c.getX()) / 2.0d, 
 			(a.getY() + c.getY()) / 2.0d
 		);
+	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintLine(a, b);
+		painter.paintLine(b, c);
+		painter.paintLine(c, d);
+		painter.paintLine(d, a);
 	}
 
 	public Vertex2D getA() {
