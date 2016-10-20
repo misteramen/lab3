@@ -58,6 +58,11 @@ public class Line extends Figure implements Scale, Rotate {
 			(a.getY() + b.getY()) / 2.0d
 		);
 	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintLine(a, b);
+	}
 	
 	public Vertex2D getA() {
 		return a;
