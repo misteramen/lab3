@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Circle</code> class represents a circle in 2D-space. It contains two 
  * instance variables: <code>position(Vertex2D)</code> and <code>radius(double)</code>. 
@@ -15,7 +18,7 @@ package model;
  * @version 2.0
  *
  */
-public class Circle extends Figure implements Scale {
+public class Circle extends Figure implements Scale, Drawable {
 	private Vertex2D position;
 	private double radius;
 	/**
@@ -47,6 +50,11 @@ public class Circle extends Figure implements Scale {
 	@Override
 	public Vertex2D center() {
 		return position;
+	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintEllipse(position, radius, radius);
 	}
 	
 	public double getRadius() {
