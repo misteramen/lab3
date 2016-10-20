@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Line</code> class represents a line in 2D-space. It contains two
  * instance variables: <code>a(Vertex2D)</code> and <code>b(Vertex2D)</code>.
@@ -14,7 +17,7 @@ package model;
  * @version 2.0
  *
  */
-public class Line extends Figure implements Scale, Rotate {
+public class Line extends Figure implements Scale, Rotate, Drawable {
 	private Vertex2D a;
 	private Vertex2D b;
 
