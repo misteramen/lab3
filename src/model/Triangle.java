@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Triangle</code> class represents a triangle in 2D-space. It contains three
  * instance variables: <code>a(Vertex2D)</code>, <code>b(Vertex2D)</code> and <code>c(Vertex2D)</code>.
@@ -14,7 +17,7 @@ package model;
  * @version 2.0
  *
  */
-public class Triangle extends Figure implements Scale, Rotate {
+public class Triangle extends Figure implements Scale, Rotate, Drawable {
 	private Vertex2D a;
 	private Vertex2D b;
 	private Vertex2D c;
@@ -122,6 +125,13 @@ public class Triangle extends Figure implements Scale, Rotate {
 		}
 		
 		return new Vertex2D(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
+	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintLine(a, b);
+		painter.paintLine(b, c);
+		painter.paintLine(c, a);
 	}
 	
 	public Vertex2D getA() {
