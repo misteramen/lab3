@@ -51,7 +51,7 @@ public class Circle extends Figure implements Scale, Drawable {
 		} else if(xFactor == 0 && yFactor != 0) {
 			factor = yFactor;
 		} else {
-			if(xFactor > yFactor) {
+			if(xFactor >= yFactor) {
 				factor = xFactor;
 			} else {
 				factor = yFactor;
@@ -71,14 +71,7 @@ public class Circle extends Figure implements Scale, Drawable {
 
 	@Override
 	public void draw(PrimitivesPainter painter) {
-		painter.paintEllipse(
-			new Vertex2D(
-				position.getX() - radius, 
-				position.getY() - radius
-			), 
-			radius * 2.0d, 
-			radius * 2.0d
-		);
+		painter.paintEllipse(position, radius, radius);
 	}
 	
 	public double getRadius() {
