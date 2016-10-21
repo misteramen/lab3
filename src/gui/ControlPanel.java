@@ -7,11 +7,19 @@
  */
 package gui;
 
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -21,7 +29,7 @@ import ctrl.FigureController;
 import model.Figure;
 
 /**
- * ControlPanel Ã¤r en behÃ¥llare fÃ¶r olika styrelement.
+ * ControlPanel är en behållare för olika styrelement.
  * 
  * @author Peter.Jenke@hig.se
  */
@@ -40,161 +48,47 @@ public class ControlPanel extends JPanel {
 		controller = new FigureController();
 		
 		setLayout(new GridLayout(2, 8));
-		
-		JButton rotatePlusButton = new JButton("Rotate+");
-		JButton rotateMinusButton = new JButton("Rotate-");
-		JButton scaleUpButton = new JButton("Bigger");
-		JButton scaleDownButton = new JButton("Smaller");
-		JButton upButton = new JButton("\u2191");
-		JButton downButton = new JButton("\u2193");
-		JButton leftButton = new JButton("\u2190");
-		JButton rightButton = new JButton("\u2192");
-		JButton newPointButton = new JButton("New Point");
-		JButton newLineButton = new JButton("New Line");
-		JButton newTriangleButton = new JButton("New Triangle");
-		JButton newCircleButton = new JButton("New Circle");
+
+		JButton newPointButton     = new JButton("New Point");
+		JButton newLineButton      = new JButton("New Line");
+		JButton newTriangleButton  = new JButton("New Triangle");
+		JButton newCircleButton    = new JButton("New Circle");
 		JButton newRectangleButton = new JButton("New Rectangle");
-		JButton removeAllButton = new JButton("Remove");
-		JButton paintAllButton = new JButton("Paint");
+		JButton moveAllButton      = new JButton("Move All");
+		JButton scaleAllButton     = new JButton("Scale All");
+		JButton rotateAllButton    = new JButton("Rotate All");
+		JButton paintAllButton     = new JButton("Paint");
 		JButton printAllDataButton = new JButton("Print Data");
+		JButton removeAllButton    = new JButton("Remove");
+		JButton exportButton       = new JButton("Export");
 		
-		rotatePlusButton.addActionListener(new RotatePlusListener());
-		rotateMinusButton.addActionListener(new RotateMinusListener());
-		scaleUpButton.addActionListener(new ScaleUpListener());
-		scaleDownButton.addActionListener(new ScaleDownListener());
-		upButton.addActionListener(new MoveUpListener());
-		downButton.addActionListener(new MoveDownListener());
-		leftButton.addActionListener(new MoveLeftListener());
-		rightButton.addActionListener(new MoveRightListener());
 		newPointButton.addActionListener(new NewPointListener());
 		newLineButton.addActionListener(new NewLineListener());
 		newTriangleButton.addActionListener(new NewTriangleListener());
 		newCircleButton.addActionListener(new NewCircleListener());
 		newRectangleButton.addActionListener(new NewRectangleListener());
-		removeAllButton.addActionListener(new RemoveAllListener());
+		moveAllButton.addActionListener(new MoveListener());
+		scaleAllButton.addActionListener(new ScaleListener());
+		rotateAllButton.addActionListener(new RotateListener());
 		paintAllButton.addActionListener(new PaintAllListener());
 		printAllDataButton.addActionListener(new PrintAllDataListener());
+		removeAllButton.addActionListener(new RemoveAllListener());
+		exportButton.addActionListener(new ExportListener());
 		
-		add(rotatePlusButton);
-		add(rotateMinusButton);
-		add(scaleUpButton);
-		add(scaleDownButton);
-		add(leftButton);
-		add(upButton);
-		add(downButton);
-		add(rightButton);
 		add(newPointButton);
 		add(newLineButton);
 		add(newTriangleButton);
 		add(newCircleButton);
 		add(newRectangleButton);
-		add(removeAllButton);
 		add(paintAllButton);
+		add(moveAllButton);
+		add(scaleAllButton);
+		add(rotateAllButton);
 		add(printAllDataButton);
+		add(removeAllButton);
+		add(exportButton);
 		
 		dc = new DialogCreator();
-	}
-	
-	// Uppgifter:
-	// Skapa metoder som kan anvÃ¤ndas fÃ¶r att tilldela handler-objekt
-	// till ControlPanel-instansen.
-	
-	// Lyssnare-klasser som nedan fÃ¶ljer fÃ¥ngar upp hÃ¤ndelser som genereras
-	// nÃ¤r anvÃ¤ndaren trycker pÃ¥ en knapp.
-	// I varje actionPerformed-metod mÃ¥ste det finnas ett metodanrop
-	// som t.ex. rotateAll eller moveAll. Man mÃ¥ste alltsÃ¥ ha tillgÃ¥ng
-	// till objekt som definierar metoderna.
-	private class RotatePlusListener implements ActionListener {
-		/**
-		 * Metoden anropas nÃ¤r 'Rotate+'-knappen aktiveras.
-		 */
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Rotation 5 grader
-			controller.rotateAll(5);
-			dp.repaint();
-			
-			System.out.println("Rotate+");
-		}	
-	}
-
-	private class RotateMinusListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Rotation -5 grader
-			controller.rotateAll(-5);
-			dp.repaint();
-			
-			System.out.println("Rotate-");
-		}	
-	}
-
-	private class ScaleUpListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Skalning, faktor 1.05 i x and y, 
-			controller.scaleAll(1.05, 1.05);
-			dp.repaint();
-			
-			System.out.println("Bigger");
-		}	
-	}
-
-	private class ScaleDownListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			// Skalning, faktor 0.95 i x and y, 
-			controller.scaleAll(0.95, 0.95);
-			dp.repaint();
-			
-			System.out.println("Smaller");
-		}	
-	}
-
-	private class MoveUpListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Flytta i positiv y-riktning med avstÃ¥nd (0.0, 0.5)
-			controller.moveAll(0.0, -2.0);
-			dp.repaint();
-			
-			System.out.println("Move Up");
-		}	
-	}
-
-	private class MoveDownListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Flytta i negativ y-riktning med avstÃ¥nd (0.0, -0.5)
-			controller.moveAll(0.0, 2.0);
-			dp.repaint();
-			
-			System.out.println("Move Down");
-		}	
-	}
-
-	private class MoveLeftListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Flytta i negativ x-riktning med avstÃ¥nd (-0.5, 0.0)
-			controller.moveAll(-2.0, 0.0);
-			dp.repaint();
-			
-			System.out.println("Move Left");
-		}	
-	}
-
-	private class MoveRightListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Flytta i positiv x-riktning med avstÃ¥nd (0.5, 0.0)
-			controller.moveAll(2.0, 0.0);
-			dp.repaint();
-			
-			System.out.println("Move Right");
-		}	
 	}
 	
 	private class NewPointListener implements ActionListener {
@@ -210,8 +104,6 @@ public class ControlPanel extends JPanel {
 			// FigureHandler-objektet.
 			controller.createPoint(x, y);
 			dp.repaint();
-			
-			System.out.println("Created A New Point!");
 		}	
 	}
 	
@@ -234,8 +126,6 @@ public class ControlPanel extends JPanel {
 			// FigureHandler-objektet.
 			controller.createLine(x0, y0, x1, y1);
 			dp.repaint();
-			
-			System.out.println("Created A New Line!");
 		}	
 	}
 	
@@ -260,8 +150,6 @@ public class ControlPanel extends JPanel {
 			// FigureHandler-objektet.
 			controller.createTriangle(x0, y0, x1, y1, x2, y2);
 			dp.repaint();
-			
-			System.out.println("Created A New Triangle!");
 		}	
 	}
 	
@@ -280,8 +168,6 @@ public class ControlPanel extends JPanel {
 			// FigureHandler-objektet.
 			controller.createCircle(x, y, r);
 			dp.repaint();
-			
-			System.out.println("Created A New Circle!");
 		}	
 	}
 	
@@ -302,36 +188,65 @@ public class ControlPanel extends JPanel {
 			// FigureHandler-objektet.
 			controller.createRectangle(x, y, w, h);
 			dp.repaint();
+		}	
+	}
+
+	private class MoveListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String mdx = "dx ";
+			String mdy = "dy ";
 			
-			System.out.println("Created A New Rectangle!");
+			double dx = dc.createDoubleDialog(mdx);
+			double dy = dc.createDoubleDialog(mdy);
+			
+			// Flyttar alla figurer som kan förflyttas i riktningen [dx, dy].
+			controller.moveAll(dx, dy);
+			dp.repaint();
+		}	
+	}
+
+	private class ScaleListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String msx = "sx ";
+			String msy = "sy ";
+			
+			double sx = dc.createDoubleDialog(msx);
+			double sy = dc.createDoubleDialog(msy);
+			
+			// Skalar alla figurer som kan skala med [sx, sy]
+			controller.scaleAll(sx,sy);
+			dp.repaint();
 		}	
 	}
 	
-	private class RemoveAllListener implements ActionListener {
+	private class RotateListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			controller.removeAll();
-			dp.repaint();
+			String mAngle = "angle ";
 			
-			System.out.println("Remove All!");
+			double angle = dc.createDoubleDialog(mAngle);
+			
+			controller.rotateAll(angle);
+			dp.repaint();
 		}	
 	}
 	
 	private class PaintAllListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			List<Drawable> drawables = new ArrayList<Drawable>();
+			 List<Drawable> drawables = new ArrayList<Drawable>();
 			
 			for(Figure figure : controller.getMovableFigures()) {
 				if(figure instanceof Drawable) {
-					drawables.add((Drawable) figure);
+					Drawable temp = (Drawable) figure;
+					drawables.add(temp);
 				}
 			}
 
 			dp.setDrawables(drawables);
 			dp.repaint();
-			
-			System.out.println("Paint All!");
 		}	
 	}
 	
@@ -340,25 +255,50 @@ public class ControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			controller.printAll();
 			dp.repaint();
-			
-			System.out.println("Print All Data!");
 		}	
+	}
+	
+	private class RemoveAllListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.removeAll();
+			dp.repaint();
+		}	
+	}
+	
+	private class ExportListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			BufferedImage image = new BufferedImage(dp.getWidth(), dp.getHeight(), BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2d = image.createGraphics();
+			dp.paint(g2d);
+			
+			try {
+				ImageIO.write(
+					image, 
+					"png", 
+					new File("H:\\beachsand\\OODP Laboration 3\\export\\saved.png")
+				);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 	
 	private class DialogCreator {
 		double createDoubleDialog (String msg) {
 			String inValue = null;				// inmatad text
-			String error_msg = "";				// felmeddelandet som visas om texten innehÃ¥ller
-												// andra tecken Ã¤n bara siffror och en punkt
+			String error_msg = "";				// felmeddelandet som visas om texten innehåller
+												// andra tecken än bara siffror och en punkt
 			double v = 0;
 			
 			while ((inValue = JOptionPane.showInputDialog (msg + error_msg + ":")) != null) {
 				error_msg = "";
 				
 				/*
-				Om texten innehÃ¥ller nÃ¥got annat Ã¤n siffror, sÃ¥ genereras en
+				Om texten innehåller något annat än siffror, så genereras en
 				NumberFormatException. Vi vill inte att programmet avslutar
-				och fÃ¥ngar den. IstÃ¤llet visas ett felmeddelande fÃ¶r anvÃ¤ndaren.
+				och fångar den. Istället visas ett felmeddelande för användaren.
 				*/
 				try {
 					v = Double.parseDouble (inValue);

@@ -23,7 +23,7 @@ public class ApplicationFrame extends JFrame
 	{
 		super (title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize (new Dimension (1065, 600));
+		setPreferredSize (new Dimension (800, 600));
 
 		// mainPanel innehåller
 		// - DrawingPanel - en JPanel där figurerna ritas ut

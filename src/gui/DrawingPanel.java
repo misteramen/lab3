@@ -9,6 +9,7 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -51,11 +52,12 @@ class DrawingPanel extends JPanel implements MouseListener {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g; 
+		Graphics2D g2d = (Graphics2D) g; 
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// Tilldela g2-objektet till PrimitivesPainter-instansen
 		// Anrop rit-metoden i FigurePainter-instansen.
 		
-		figurePainter.setGraphics(g2);
+		figurePainter.setGraphics(g2d);
 		figurePainter.paintAll();
 	}
 	

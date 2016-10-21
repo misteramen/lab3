@@ -86,23 +86,35 @@ public class FigureController implements FigureHandler, FigureMover, FigureScalo
 
 	@Override
 	public void moveAll(double dx, double dy) {
+		List<Figure> tempMovableFigures = new ArrayList<Figure>();
+		
 		for(Figure figure : movableFigures) {
-			figure.translate(dx, dy);
+			tempMovableFigures.add(figure.translate(dx, dy));
 		}
+		
+		movableFigures = tempMovableFigures;
 	}
 
 	@Override
 	public void scaleAll(double xFactor, double yFactor) {
+		List<Scale> tempScalableFigures = new ArrayList<Scale>();
+		
 		for(Scale scalable : scalableFigures) {
-			scalable.scale(xFactor, yFactor);
+			tempScalableFigures.add((Scale) scalable.scale(xFactor, yFactor));
 		}
+		
+		scalableFigures = tempScalableFigures;
 	}
 
 	@Override
 	public void rotateAll(double angle) {
+		List<Rotate> tempRotatableFigures = new ArrayList<Rotate>();
+		
 		for(Rotate rotate : rotatableFigures) {
-			rotate.rotate(angle);
+			tempRotatableFigures.add((Rotate) rotate.rotate(angle));
 		}
+		
+		rotatableFigures = tempRotatableFigures;
 	}
 
 	@Override

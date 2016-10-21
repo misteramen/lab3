@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Line</code> class represents a line in 2D-space. It contains two
  * instance variables: <code>a(Vertex2D)</code> and <code>b(Vertex2D)</code>.
@@ -14,7 +17,7 @@ package model;
  * @version 2.0
  *
  */
-public class Line extends Figure implements Scale, Rotate {
+public class Line extends Figure implements Scale, Rotate, Drawable {
 	private Vertex2D a;
 	private Vertex2D b;
 
@@ -58,6 +61,11 @@ public class Line extends Figure implements Scale, Rotate {
 			(a.getY() + b.getY()) / 2.0d
 		);
 	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintLine(a, b);
+	}
 	
 	public Vertex2D getA() {
 		return a;
@@ -70,7 +78,7 @@ public class Line extends Figure implements Scale, Rotate {
 	@Override
 	public String toString() {
 		return
-			"\nLine {\n" +
+			"Line {\n" +
 			"    A["+ a.getX() +", " + a.getY() + "] : " +
 			"B["+ b.getX() +", " + b.getY() + "]\n" +
 			"}\n";

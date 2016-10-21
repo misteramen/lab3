@@ -1,5 +1,8 @@
 package model;
 
+import gui.Drawable;
+import gui.PrimitivesPainter;
+
 /**
  * The <code>Point</code> class represents a point in 2D-space. It contains one
  * instance variable: <code>position(Vertex2D)</code>.
@@ -14,7 +17,7 @@ package model;
  * @version 2.0
  *
  */
-public class Point extends Figure {
+public class Point extends Figure implements Drawable {
 	/**
 	 * Holds the values of the Point's coordinates.
 	 * 
@@ -39,11 +42,16 @@ public class Point extends Figure {
 	public Vertex2D center() {
 		return position;
 	}
+
+	@Override
+	public void draw(PrimitivesPainter painter) {
+		painter.paintPoint(position);
+	}
 	
 	@Override
 	public String toString() {
 		return 
-			"\nPoint {\n" +
+			"Point {\n" +
 			"    P["+ position.getX() +", " + position.getY() + "]\n" +
 			"}\n";
 	}
