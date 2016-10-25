@@ -37,6 +37,7 @@ import model.Figure;
 public class ControlPanel extends JPanel {
 	private DrawingPanel dp;
 	private DialogCreator dc;
+	private FileNameCreator df;
 	
 	private FigureController controller;
 
@@ -89,6 +90,7 @@ public class ControlPanel extends JPanel {
 		add(exportButton);
 		
 		dc = new DialogCreator();
+		df = new FileNameCreator();
 	}
 	
 	private class NewPointListener implements ActionListener {
@@ -273,11 +275,13 @@ public class ControlPanel extends JPanel {
 			Graphics2D g2d = image.createGraphics();
 			dp.paint(g2d);
 			
+			String mFileName = "Enter file name: ";
+			String fileName = df.createFileName(mFileName);
 			try {
 				ImageIO.write(
 					image, 
 					"png", 
-					new File("H:\\beachsand\\OODP Laboration 3\\export\\saved.png")
+					new File("H:\\workspace\\Lab3\\export\\" + fileName + ".png")
 				);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -309,6 +313,16 @@ public class ControlPanel extends JPanel {
 			}
 
 			return v;
+		}
+	}
+	private class FileNameCreator {
+		String createFileName (String msg){
+			
+			String error_msg = "";
+			String s = "";
+			s = JOptionPane.showInputDialog (msg + error_msg + ":");
+			
+			return s;	
 		}
 	}
 }
