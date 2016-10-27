@@ -80,11 +80,11 @@ public class ControlPanel extends JPanel {
 		add(newTriangleButton);
 		add(newCircleButton);
 		add(newRectangleButton);
-		add(removeAllButton);
 		add(moveAllButton);
 		add(scaleAllButton);
 		add(rotateAllButton);
 		add(printAllDataButton);
+		add(removeAllButton);
 		add(exportButton);
 		
 		dc = new DialogCreator();
