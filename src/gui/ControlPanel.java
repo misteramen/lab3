@@ -41,6 +41,7 @@ public class ControlPanel extends JPanel {
 
 	/**
 	 * Creates a new instances of ControlPanel.
+	 *
 	 */
 	public ControlPanel (DrawingPanel dp) {
 		this.dp = dp;
@@ -132,9 +133,7 @@ public class ControlPanel extends JPanel {
 			double y1 = dc.createDoubleDialog(my1);
 			
 			controller.createLine(x0, y0, x1, y1);
-
-			// Skapa en ny linje genom att anropa motsvarande metoden
-			// FigureHandler-objektet.
+			
 			controller.createLine(x0, y0, x1, y1);
 			update();
 		}	
@@ -174,9 +173,7 @@ public class ControlPanel extends JPanel {
 			double x = dc.createDoubleDialog(mx);
 			double y = dc.createDoubleDialog(my);
 			double r  = dc.createDoubleDialog(mr);
-
-			// Skapa en ny linje genom att anropa motsvarande metoden
-			// FigureHandler-objektet.
+			
 			controller.createCircle(x, y, r);
 			update();
 		}	
@@ -194,9 +191,7 @@ public class ControlPanel extends JPanel {
 			double y = dc.createDoubleDialog(my);
 			double w = dc.createDoubleDialog(mw);
 			double h = dc.createDoubleDialog(mh);
-
-			// Skapa en ny linje genom att anropa motsvarande metoden
-			// FigureHandler-objektet.
+			
 			controller.createRectangle(x, y, w, h);
 			update();
 		}	
@@ -211,7 +206,6 @@ public class ControlPanel extends JPanel {
 			double dx = dc.createDoubleDialog(mdx);
 			double dy = dc.createDoubleDialog(mdy);
 			
-			// Flyttar alla figurer som kan förflyttas i riktningen [dx, dy].
 			controller.moveAll(dx, dy);
 			
 			update();
@@ -227,7 +221,6 @@ public class ControlPanel extends JPanel {
 			double sx = dc.createDoubleDialog(msx);
 			double sy = dc.createDoubleDialog(msy);
 			
-			// Skalar alla figurer som kan skala med [sx, sy]
 			controller.scaleAll(sx,sy);
 
 			update();
@@ -286,19 +279,14 @@ public class ControlPanel extends JPanel {
 	
 	private class DialogCreator {
 		double createDoubleDialog (String msg) {
-			String inValue = null;				// inmatad text
-			String error_msg = "";				// felmeddelandet som visas om texten innehåller
-									// andra tecken än bara siffror och en punkt
+			String inValue = null;
+			String error_msg = "";
+			
 			double v = 0;
 			
 			while ((inValue = JOptionPane.showInputDialog (msg + error_msg + ":")) != null) {
 				error_msg = "";
 				
-				/*
-				Om texten innehåller något annat än siffror, så genereras en
-				NumberFormatException. Vi vill inte att programmet avslutar
-				och fångar den. Istället visas ett felmeddelande för användaren.
-				*/
 				try {
 					v = Double.parseDouble (inValue);
 					break;
