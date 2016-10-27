@@ -1,6 +1,5 @@
 package model;
 
-import gui.Drawable;
 import gui.PrimitivesPainter;
 
 /**
