@@ -7,7 +7,7 @@ package model;
  * @author Andreas Brodin
  * @author Niklas Lindfors
  * @author Joshua Lutakome Yawe
- * @version 2.0
+ * @version 3.0
  *
  */
 public abstract class Figure {
