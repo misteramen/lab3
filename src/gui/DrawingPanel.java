@@ -1,10 +1,3 @@
-/*
- * OODP, laboration 3
- *
- * DrawingPanel.java
- *
- * Peter Jenke, 2015-01-10
- */
 package gui;
 
 import java.awt.Graphics;
@@ -19,18 +12,20 @@ import javax.swing.JPanel;
 import model.Drawable;
 
 /**
- * DrawingPanel kan användas för att visa geometriska figurer.
- * Klassen implementerar MouseListener, dvs. innehåller metoder
- * som kan användas för att registrera mus-händelser.
+ * <code>DrawingPanel</code> is used to draw geometrical figures on its surface.
  * 
- * @author Peter.Jenke@hig.se
+ * @author Andreas Brodin
+ * @author Niklas Lindfors
+ * @author Joshua Lutakome Yawe
+ * @version 1.0
+ *
  */
 @SuppressWarnings("serial")
 class DrawingPanel extends JPanel implements MouseListener {
 	private FigurePainterImpl figurePainter;
 	
 	/**
-	 * Skapar en ny instans av DrawingPanel.
+	 * Creates a new instance of DrawingPanel.
 	 * 
 	 */
 	public DrawingPanel()
@@ -39,19 +34,11 @@ class DrawingPanel extends JPanel implements MouseListener {
 		
 		figurePainter = new FigurePainterImpl();
 	}
-
-	/**
-	 * Ritar ut grafiska elementen på nytt.
-	 * 
-	 * Grafiska element här är kartan och linjen samt start-/slutpunkt.
-	 * Det senare ifall användaren markerade sådana.
-	 */
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g; 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		// Tilldela g2-objektet till PrimitivesPainter-instansen
-		// Anrop rit-metoden i FigurePainter-instansen.
 		
 		figurePainter.setGraphics(g2d);
 		figurePainter.paintAll();
@@ -63,52 +50,23 @@ class DrawingPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// Behövs för DrawingPanel är en MouseListener.
 		repaint ();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// Behövs för DrawingPanel är en MouseListener.
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// Behövs för DrawingPanel är en MouseListener.
 	}
 
-	/**
-	 * Används för att registrera om användaren började
-	 * att markera positioner i kartan.
-	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// Behövs för DrawingPanel är en MouseListener.
-		
-		// Användaren markerade startpunkten -
-		// den måste registreras!
-		// Man får tag på koordinaterna genom
-		// att anropa e.getX() resp. e.getY().
 	}
 
-	/**
-	 * Används för att registrera om användaren avslutade
-	 * att markera positioner i kartan.
-	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// Behövs för DrawingPanel är en MouseListener.
-		
-		// Användaren markerade slutpunkten -
-		// den måste registreras!
-		// Man får tag på koordinaterna genom
-		// att anropa e.getX() resp. e.getY().
-		
-		// Anropa här koden för att beräkna
-		// distans och bäring!
-		
-		// Rita ut bilden på nytt, nu med linjen
-		// och start-/slutpunkt.
 		repaint ();
 	}
 }
