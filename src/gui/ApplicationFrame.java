@@ -14,6 +14,16 @@ import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * <code>ApplicationFrame</code> combines the drawing and controlling components 
+ * into one unifying view.
+ * 
+ * @author Andreas Brodin
+ * @author Niklas Lindfors
+ * @author Joshua Lutakome Yawe
+ * @version 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ApplicationFrame extends JFrame
 {
@@ -42,8 +52,4 @@ public class ApplicationFrame extends JFrame
 		pack();
 		setVisible(true);
 	}
-	
-	// Uppgifter:
-	// Skapa metoder som kan användas för att tilldela handler-objekt
-	// till ControlPanel-instansen.
 }
