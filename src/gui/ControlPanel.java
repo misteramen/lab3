@@ -1,10 +1,3 @@
-/*
- * OODP, laboration 3
- *
- * ControlPanel.java
- *
- * Peter Jenke, 2015-01-10
- */
 package gui;
 
 import java.awt.Graphics2D;
@@ -30,9 +23,13 @@ import model.Drawable;
 import model.Figure;
 
 /**
- * ControlPanel är en behållare för olika styrelement.
+ * The <code>ControlPanel</code> is a container for control elements.
  * 
- * @author Peter.Jenke@hig.se
+ * @author Andreas Brodin
+ * @author Niklas Lindfors
+ * @author Joshua Lutakome Yawe
+ * @version 1.0
+ *
  */
 @SuppressWarnings("serial")
 public class ControlPanel extends JPanel {
@@ -43,7 +40,7 @@ public class ControlPanel extends JPanel {
 	private FigureController controller;
 
 	/**
-	 * Skapar en ny instans av ControlPanel.
+	 * Creates a new instances of ControlPanel.
 	 */
 	public ControlPanel (DrawingPanel dp) {
 		this.dp = dp;
@@ -291,7 +288,7 @@ public class ControlPanel extends JPanel {
 		double createDoubleDialog (String msg) {
 			String inValue = null;				// inmatad text
 			String error_msg = "";				// felmeddelandet som visas om texten innehåller
-												// andra tecken än bara siffror och en punkt
+									// andra tecken än bara siffror och en punkt
 			double v = 0;
 			
 			while ((inValue = JOptionPane.showInputDialog (msg + error_msg + ":")) != null) {
