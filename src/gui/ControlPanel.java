@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ctrl.FigureController;
+import model.Drawable;
 import model.Figure;
 
 /**
@@ -58,7 +59,6 @@ public class ControlPanel extends JPanel {
 		JButton moveAllButton      = new JButton("Move All");
 		JButton scaleAllButton     = new JButton("Scale All");
 		JButton rotateAllButton    = new JButton("Rotate All");
-		JButton paintAllButton     = new JButton("Paint");
 		JButton printAllDataButton = new JButton("Print Data");
 		JButton removeAllButton    = new JButton("Remove");
 		JButton exportButton       = new JButton("Export");
@@ -71,7 +71,6 @@ public class ControlPanel extends JPanel {
 		moveAllButton.addActionListener(new MoveListener());
 		scaleAllButton.addActionListener(new ScaleListener());
 		rotateAllButton.addActionListener(new RotateListener());
-		paintAllButton.addActionListener(new PaintAllListener());
 		printAllDataButton.addActionListener(new PrintAllDataListener());
 		removeAllButton.addActionListener(new RemoveAllListener());
 		exportButton.addActionListener(new ExportListener());
@@ -81,16 +80,29 @@ public class ControlPanel extends JPanel {
 		add(newTriangleButton);
 		add(newCircleButton);
 		add(newRectangleButton);
-		add(paintAllButton);
+		add(removeAllButton);
 		add(moveAllButton);
 		add(scaleAllButton);
 		add(rotateAllButton);
 		add(printAllDataButton);
-		add(removeAllButton);
 		add(exportButton);
 		
 		dc = new DialogCreator();
 		df = new FileNameCreator();
+	}
+	
+	void update() {
+		 List<Drawable> drawables = new ArrayList<Drawable>();
+			
+		for(Figure figure : controller.getMovableFigures()) {
+			if(figure instanceof Drawable) {
+				Drawable temp = (Drawable) figure;
+				drawables.add(temp);
+			}
+		}
+
+		dp.setDrawables(drawables);
+		dp.repaint();
 	}
 	
 	private class NewPointListener implements ActionListener {
@@ -105,7 +117,7 @@ public class ControlPanel extends JPanel {
 			// Skapa en ny punkt genom att anropa motsvarande metoden
 			// FigureHandler-objektet.
 			controller.createPoint(x, y);
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -127,7 +139,7 @@ public class ControlPanel extends JPanel {
 			// Skapa en ny linje genom att anropa motsvarande metoden
 			// FigureHandler-objektet.
 			controller.createLine(x0, y0, x1, y1);
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -151,7 +163,7 @@ public class ControlPanel extends JPanel {
 			// Skapa en ny linje genom att anropa motsvarande metoden
 			// FigureHandler-objektet.
 			controller.createTriangle(x0, y0, x1, y1, x2, y2);
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -169,7 +181,7 @@ public class ControlPanel extends JPanel {
 			// Skapa en ny linje genom att anropa motsvarande metoden
 			// FigureHandler-objektet.
 			controller.createCircle(x, y, r);
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -189,7 +201,7 @@ public class ControlPanel extends JPanel {
 			// Skapa en ny linje genom att anropa motsvarande metoden
 			// FigureHandler-objektet.
 			controller.createRectangle(x, y, w, h);
-			dp.repaint();
+			update();
 		}	
 	}
 
@@ -204,7 +216,8 @@ public class ControlPanel extends JPanel {
 			
 			// Flyttar alla figurer som kan förflyttas i riktningen [dx, dy].
 			controller.moveAll(dx, dy);
-			dp.repaint();
+			
+			update();
 		}	
 	}
 
@@ -219,8 +232,9 @@ public class ControlPanel extends JPanel {
 			
 			// Skalar alla figurer som kan skala med [sx, sy]
 			controller.scaleAll(sx,sy);
-			dp.repaint();
-		}	
+
+			update();
+		}
 	}
 	
 	private class RotateListener implements ActionListener {
@@ -231,24 +245,8 @@ public class ControlPanel extends JPanel {
 			double angle = dc.createDoubleDialog(mAngle);
 			
 			controller.rotateAll(angle);
-			dp.repaint();
-		}	
-	}
-	
-	private class PaintAllListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			 List<Drawable> drawables = new ArrayList<Drawable>();
-			
-			for(Figure figure : controller.getMovableFigures()) {
-				if(figure instanceof Drawable) {
-					Drawable temp = (Drawable) figure;
-					drawables.add(temp);
-				}
-			}
 
-			dp.setDrawables(drawables);
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -256,7 +254,7 @@ public class ControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.printAll();
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -264,7 +262,7 @@ public class ControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.removeAll();
-			dp.repaint();
+			update();
 		}	
 	}
 	
@@ -274,14 +272,14 @@ public class ControlPanel extends JPanel {
 			BufferedImage image = new BufferedImage(dp.getWidth(), dp.getHeight(), BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2d = image.createGraphics();
 			dp.paint(g2d);
-			
 			String mFileName = "Enter file name: ";
 			String fileName = df.createFileName(mFileName);
+			
 			try {
 				ImageIO.write(
 					image, 
 					"png", 
-					new File("H:\\workspace\\Lab3\\export\\" + fileName + ".png")
+					new File("H:\\beachsand\\OODP Laboration 3\\export\\" + fileName + ".png")
 				);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -315,6 +313,7 @@ public class ControlPanel extends JPanel {
 			return v;
 		}
 	}
+	
 	private class FileNameCreator {
 		String createFileName (String msg){
 			
@@ -326,22 +325,3 @@ public class ControlPanel extends JPanel {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
