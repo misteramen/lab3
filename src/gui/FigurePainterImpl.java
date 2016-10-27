@@ -4,6 +4,17 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * The <code>FigurePainterImpl</code> class is used to draw its set
+ * of <code>Drawable</code> instances to the screen.
+ * 
+ * @author Andreas Brodin
+ * @author Niklas Lindfors
+ * @author Joshua Lutakome Yawe
+ * @version 1.0
+ *
+ */
 public class FigurePainterImpl implements FigurePainter {
 	private List<Drawable> drawables;
 	private PrimitivesPainterImpl painter;
