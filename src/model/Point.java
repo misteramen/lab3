@@ -1,6 +1,5 @@
 package model;
 
-import gui.Drawable;
 import gui.PrimitivesPainter;
 
 /**
@@ -14,7 +13,7 @@ import gui.PrimitivesPainter;
  * @author Andreas Brodin
  * @author Niklas Lindfors
  * @author Joshua Lutakome Yawe
- * @version 2.0
+ * @version 3.0
  *
  */
 public class Point extends Figure implements Drawable {
