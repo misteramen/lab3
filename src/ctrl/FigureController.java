@@ -6,17 +6,15 @@ import java.util.List;
 import model.*;
 
 /**
- * Klassen â€œFigureControllerâ€� har som syfte att hantera den logiska och styrande 
+ * Klassen <code>FigureController</code> har som syfte att hantera den logiska och styrande 
  * delen av programmet. Den skapar och sorterar de olika figurerna i listor som 
- * beskriver beteenden. Det finns tre beteenden som figurerna klassificeras enligt 
- * med genom operationen classify(): movableFigures, scalableFigures och 
- * rotatableFigures. Alla figurer Ã¤r flyttbara och vissa figurer har alla tre 
- * beteenden.
+ * beskriver beteenden. Det finns tre beteenden som figurerna klassificeras enligt: Figure, Scale och 
+ * Rotate. Alla figurer är flyttbara och vissa figurer har alla tre beteenden.
  * 
  * @author Andreas Brodin
  * @author Niklas Lindfors
  * @author Joshua Lutakome Yawe
- * @version 1.0
+ * @version 2.0
  *
  */
 public class FigureController implements FigureHandler, FigureMover, FigureScalor, FigureRotor, FigurePrinter {
@@ -87,33 +85,102 @@ public class FigureController implements FigureHandler, FigureMover, FigureScalo
 	@Override
 	public void moveAll(double dx, double dy) {
 		List<Figure> tempMovableFigures = new ArrayList<Figure>();
+		List<Scale> tempScalableFigures = new ArrayList<Scale>();
+		List<Rotate> tempRotatableFigures = new ArrayList<Rotate>();
 		
 		for(Figure figure : movableFigures) {
-			tempMovableFigures.add(figure.translate(dx, dy));
+			if(figure instanceof Figure) {
+				Figure temp = ((Figure) figure).translate(dx, dy);
+				tempMovableFigures.add((Figure) temp);
+
+				if(temp instanceof Scale) {
+					tempScalableFigures.add((Scale) temp);
+				}
+				
+				if(temp instanceof Rotate) {
+					tempRotatableFigures.add((Rotate) temp);
+				}
+			} else {
+				if(figure instanceof Scale) {
+					tempScalableFigures.add((Scale) figure);
+				}
+				
+				if(figure instanceof Rotate) {
+					tempRotatableFigures.add((Rotate) figure);
+				}
+			}
 		}
 		
 		movableFigures = tempMovableFigures;
+		scalableFigures = tempScalableFigures;
+		rotatableFigures = tempRotatableFigures;
 	}
 
 	@Override
 	public void scaleAll(double xFactor, double yFactor) {
+		List<Figure> tempMovableFigures = new ArrayList<Figure>();
 		List<Scale> tempScalableFigures = new ArrayList<Scale>();
+		List<Rotate> tempRotatableFigures = new ArrayList<Rotate>();
 		
-		for(Scale scalable : scalableFigures) {
-			tempScalableFigures.add((Scale) scalable.scale(xFactor, yFactor));
+		for(Figure figure : movableFigures) {
+			if(figure instanceof Scale) {
+				Figure temp = ((Scale) figure).scale(xFactor, yFactor);
+				tempScalableFigures.add((Scale) temp);
+
+				if(temp instanceof Figure) {
+					tempMovableFigures.add((Figure) temp);
+				}
+				
+				if(temp instanceof Rotate) {
+					tempRotatableFigures.add((Rotate) temp);
+				}
+			} else {
+				if(figure instanceof Figure) {
+					tempMovableFigures.add((Figure) figure);
+				}
+				
+				if(figure instanceof Rotate) {
+					tempRotatableFigures.add((Rotate) figure);
+				}
+			}
 		}
 		
+		movableFigures = tempMovableFigures;
 		scalableFigures = tempScalableFigures;
+		rotatableFigures = tempRotatableFigures;
 	}
 
 	@Override
 	public void rotateAll(double angle) {
+		List<Figure> tempMovableFigures = new ArrayList<Figure>();
+		List<Scale> tempScalableFigures = new ArrayList<Scale>();
 		List<Rotate> tempRotatableFigures = new ArrayList<Rotate>();
 		
-		for(Rotate rotate : rotatableFigures) {
-			tempRotatableFigures.add((Rotate) rotate.rotate(angle));
+		for(Figure figure : movableFigures) {
+			if(figure instanceof Rotate) {
+				Figure temp = ((Rotate) figure).rotate(angle);
+				tempRotatableFigures.add((Rotate) temp);
+
+				if(temp instanceof Figure) {
+					tempMovableFigures.add((Figure) temp);
+				}
+				
+				if(temp instanceof Scale) {
+					tempScalableFigures.add((Scale) temp);
+				}
+			} else {
+				if(figure instanceof Figure) {
+					tempMovableFigures.add((Figure) figure);
+				}
+				
+				if(figure instanceof Scale) {
+					tempScalableFigures.add((Scale) figure);
+				}
+			}
 		}
 		
+		movableFigures = tempMovableFigures;
+		scalableFigures = tempScalableFigures;
 		rotatableFigures = tempRotatableFigures;
 	}
 
