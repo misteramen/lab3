@@ -1,6 +1,5 @@
 package model;
 
-import gui.Drawable;
 import gui.PrimitivesPainter;
 
 /**
@@ -44,23 +43,10 @@ public class Circle extends Figure implements Scale, Drawable {
 	}
 	
 	public Circle scale(double xFactor, double yFactor) {
-		double factor = 0;
-		
-		if(xFactor != 0 && yFactor == 0) {
-			factor = xFactor;
-		} else if(xFactor == 0 && yFactor != 0) {
-			factor = yFactor;
-		} else {
-			if(xFactor >= yFactor) {
-				factor = xFactor;
-			} else {
-				factor = yFactor;
-			}
-		}
 		
 		return new Circle(
 			position,
-			factor
+			radius * xFactor
 		);
 	}
 
@@ -71,7 +57,7 @@ public class Circle extends Figure implements Scale, Drawable {
 
 	@Override
 	public void draw(PrimitivesPainter painter) {
-		painter.paintEllipse(position, radius, radius);
+		painter.paintEllipse(position, radius * 2, radius * 2);
 	}
 	
 	public double getRadius() {
