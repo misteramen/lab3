@@ -16,6 +16,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import model.Drawable;
+
 /**
  * DrawingPanel kan användas för att visa geometriska figurer.
  * Klassen implementerar MouseListener, dvs. innehåller metoder
@@ -27,18 +29,12 @@ import javax.swing.JPanel;
 class DrawingPanel extends JPanel implements MouseListener {
 	private FigurePainterImpl figurePainter;
 	
-	// Uppgifter:
-	// - Lägg till kod för att tilldela och lagra en instans FigurePainter.
-	// - Lägg till kod för att tilldela och lagra en instans PrimitivesPainter.
-	// - Tilldela PrimitivesPainter-instansen till FigurePainter-instansen.
-		
 	/**
 	 * Skapar en ny instans av DrawingPanel.
 	 * 
 	 */
 	public DrawingPanel()
 	{
-		// MapPanel 'fångar' själv mushändelse:
 		addMouseListener(this);
 		
 		figurePainter = new FigurePainterImpl();
