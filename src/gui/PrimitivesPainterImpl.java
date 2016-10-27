@@ -4,6 +4,16 @@ import java.awt.Graphics;
 
 import model.Vertex2D;
 
+/**
+ * The <code>PrimitivesPainterImpl</code> is used to draw the three basic geometric
+ * objects defined by the interface <code>PrimitivesPainter</code>.
+ * 
+ * @author Andreas Brodin
+ * @author Niklas Lindfors
+ * @author Joshua Lutakome Yawe
+ * @version 1.0
+ *
+ */
 public class PrimitivesPainterImpl implements PrimitivesPainter {
 	private Graphics g;
 	
