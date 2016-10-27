@@ -1,10 +1,3 @@
-/*
- * OODP, laboration 3
- *
- * ControlPanel.java
- *
- * Peter Jenke, 2015-01-10
- */
 package gui;
 
 import java.awt.BorderLayout;
@@ -35,9 +28,6 @@ public class ApplicationFrame extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize (new Dimension (800, 600));
 
-		// mainPanel innehåller
-		// - DrawingPanel - en JPanel där figurerna ritas ut
-		// - ControlPanel - en JPanel som innehåller styrelementen
 		JPanel mainPanel = new JPanel ();
 		mainPanel.setLayout(new BorderLayout());
 		add(mainPanel);
