@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Drawable;
+
 /**
  * 
  * The <code>FigurePainterImpl</code> class is used to draw its set
